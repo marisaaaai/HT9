@@ -3,6 +3,7 @@
  * @carne 19169, 19324
  * @date 26/04/2020
  * @name main.java
+ * @timer from:http://unestudiantedeinformatica.blogspot.com/2014/07/medir-el-tiempo-de-ejecucion-en-java.html
  * */
 /**
 * This program translates a text that the user creates from english to spanish, using associations from words on another text that the user created
@@ -33,7 +34,10 @@ public class main{
 		String linea ="";
 		Scanner s = null;
 		Scanner s1 = null;
-
+		//Timer
+		long Tinicio, Tfinal, Tiempo;
+		
+		Tinicio = System.currentTimeMillis();
 		//Menu desplegable
 		while(opcion!=3) {
 		Scanner teclado = new Scanner(System.in);
@@ -154,6 +158,11 @@ public class main{
 					System.out.println();
 					System.out.println("Gracias por usar nuestro programa");
 					System.out.println("************************************************");
+					
+					//TIEMPO DE EJECUCIÓN
+					Tfinal = System.currentTimeMillis();
+					Tiempo = Tfinal-Tinicio;
+					System.out.println("Tiempo de ejecución en milisegundos: " + Tiempo);
 				}
 				catch(Exception ex){
 					System.out.println("Mensaje de error: "+ex);
@@ -161,7 +170,9 @@ public class main{
 				
 			}else {
 				System.out.println("Ha salido del laboratorio");
+				break;
 			}
 		}
+
 	}
 }
