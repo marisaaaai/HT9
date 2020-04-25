@@ -11,12 +11,12 @@ import java.util.concurrent.*;
  * @name Factory.java
  * */
 public class Factory<K,V> {
-	public map<K,V> obtenerMap(int opcion){
+	public map<String,String> obtenerMap(int opcion){
 	    switch (opcion){
-	        case 1:
-	            return new hashMap<K,V>();
 	        case 2:
-	            return new RedBlackTree<K,V>();
+	            return new hashMap<String,String>();
+	        case 1:
+	            return new RedBlackTree<String,String>();
 	        default:
 	            return null;
 	    }
