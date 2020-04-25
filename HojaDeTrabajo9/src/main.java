@@ -37,6 +37,7 @@ public class main{
 		Scanner s1 = null;
 		//Timer
 		long Tinicio, Tfinal, Tiempo;
+		
 		try{
 			//we begin by reading our dictionary
 			s = new Scanner(dictxt);
@@ -56,7 +57,6 @@ public class main{
 			String translate1 = s1.nextLine();
 			String translate=translate1.toLowerCase();//we change every word to a lower case in order to not create errors
 			String[] translateSplit = translate.split(" ");
-			Tinicio = System.currentTimeMillis();
 			Scanner teclado = new Scanner(System.in);
 			int w = 0;
 			while( w!= 2){
@@ -65,8 +65,10 @@ public class main{
 				System.out.println("2. Hash Map Tree");
 				System.out.println("Ingrese mapeo a realizar");
 				opcion = scan.nextInt();
+					
 				Factory<String,String> myFactory = new Factory<String,String>();
 				map<String,String> myDictionary = myFactory.obtenerMap(opcion);
+				Tinicio = System.currentTimeMillis();
 				for(int i =0; i<ingles.size(); i++){
 					myDictionary.add(ingles.get(i), espanol.get(i));//Ingresa los valores al mapa
 				}	
@@ -93,6 +95,7 @@ public class main{
 				System.out.println();
 				System.out.println("Gracias por usar nuestro programa");
 				System.out.println("************************************************");
+				
 				//TIEMPO DE EJECUCIÓN
 				Tfinal = System.currentTimeMillis();
 				Tiempo = Tfinal-Tinicio;

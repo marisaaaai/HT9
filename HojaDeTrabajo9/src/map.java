@@ -4,8 +4,6 @@
  * @date 26/04/2020
  * @name map.java
  * */
-import java.util.*; 
-import java.util.concurrent.*; 
 public interface map<K,V>{
 	
 	//Returns the size of the map

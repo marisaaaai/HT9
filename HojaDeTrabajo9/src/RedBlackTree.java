@@ -3,7 +3,10 @@
  * @carne 19169, 19324
  * @date 26/04/2020
  * @name RedBlackTree.java
+ * @RedBlackTree from: https://algs4.cs.princeton.edu/33balanced/RedBlackBST.java.html
  * */
+import java.util.NoSuchElementException;
+
 public class RedBlackTree<K extends Comparable<K>, V> implements map<K,V>{
 
     private static final boolean RED   = true;
@@ -218,7 +221,95 @@ public class RedBlackTree<K extends Comparable<K>, V> implements map<K,V>{
         h.size = size(h.left) + size(h.right) + 1;
         return h;
     }
+	/**
+     * Removes the specified key and its associated value from this symbol table     
+     * (if the key is in this symbol table).    
+     *
+     * @param  key the key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public void delete(K key) { 
+        if (key == null) throw new IllegalArgumentException("argument to delete() is null");
+        if (!containsKey(key)) return;
 
-	
+        // if both children of root are black, set root to red
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = delete(root, key);
+        if (!isEmpty()) root.color = BLACK;
+        // assert check();
+    }
+   // delete the key-value pair with the given key rooted at h
+    private Node delete(Node h, K key) { 
+        // assert get(h, key) != null;
+
+        if (key.compareTo(h.key) < 0)  {
+            if (!isRed(h.left) && !isRed(h.left.left))
+                h = moveRedLeft(h);
+            h.left = delete(h.left, key);
+        }
+        else {
+            if (isRed(h.left))
+                h = rotateRight(h);
+            if (key.compareTo(h.key) == 0 && (h.right == null))
+                return null;
+            if (!isRed(h.right) && !isRed(h.right.left))
+                h = moveRedRight(h);
+            if (key.compareTo(h.key) == 0) {
+                Node x = min(h.right);
+                h.key = x.key;
+                h.val = x.val;
+                // h.val = get(h.right, min(h.right).key);
+                // h.key = min(h.right).key;
+                h.right = deleteMin(h.right);
+            }
+            else h.right = delete(h.right, key);
+        }
+        return balance(h);
+    }
+    /**
+     * Removes the smallest key and associated value from the symbol table.
+     * @throws NoSuchElementException if the symbol table is empty
+     */
+    public void deleteMin() {
+        if (isEmpty()) throw new NoSuchElementException("BST underflow");
+
+        // if both children of root are black, set root to red
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+
+        root = deleteMin(root);
+        if (!isEmpty()) root.color = BLACK;
+        // assert check();
+    }
+
+    // delete the key-value pair with the minimum key rooted at h
+    private Node deleteMin(Node h) { 
+        if (h.left == null)
+            return null;
+
+        if (!isRed(h.left) && !isRed(h.left.left))
+            h = moveRedLeft(h);
+
+        h.left = deleteMin(h.left);
+        return balance(h);
+    }
+	   /**
+     * Returns the smallest key in the symbol table.
+     * @return the smallest key in the symbol table
+     * @throws NoSuchElementException if the symbol table is empty
+     */
+    public K min() {
+        if (isEmpty()) throw new NoSuchElementException("calls min() with empty symbol table");
+        return min(root).key;
+    } 
+
+    // the smallest key in subtree rooted at x; null if no such key
+    private Node min(Node x) { 
+        // assert x != null;
+        if (x.left == null) return x; 
+        else                return min(x.left); 
+    } 	
 }
 	
